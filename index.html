@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>Daily Task Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-header">
+      <div>
+        <h1>Daily Task Dashboard</h1>
+        <p id="pageDate"></p>
+      </div>
+      <button class="global-add" type="button" data-add="daily" aria-label="Add daily task">+</button>
+    </header>
+    <section class="dashboard" aria-label="Daily task dashboard">
+      <aside class="left-panel" aria-label="Scheduled task sections">
+        <section class="side-section" data-section="emi">
+          <header class="section-heading">
+            <div>
+              <h2>EMI TODAY</h2>
+            </div>
+            <button class="icon-button add-small" type="button" data-add="emi" aria-label="Add EMI task">+</button>
+          </header>
+          <p class="section-date" id="todayDate"></p>
+          <ul class="task-list compact" id="emiList"></ul>
+          <p class="empty-state" id="emiEmpty">Nothing scheduled for today.</p>
+        </section>
+
+        <section class="side-section" data-section="tomorrow">
+          <header class="section-heading">
+            <div>
+              <h2>TOMORROW</h2>
+            </div>
+            <button class="icon-button add-small" type="button" data-add="tomorrow" aria-label="Add tomorrow task">+</button>
+          </header>
+          <p class="section-date" id="tomorrowDate"></p>
+          <ul class="task-list compact" id="tomorrowList"></ul>
+          <p class="empty-state" id="tomorrowEmpty">Tomorrow is clear.</p>
+        </section>
+
+        <section class="side-section due-section" data-section="due">
+          <header class="section-heading">
+            <div>
+              <h2>DUE DATES</h2>
+            </div>
+            <button class="icon-button add-small" type="button" data-add="due" aria-label="Add due date">+</button>
+          </header>
+          <ul class="task-list compact" id="dueList"></ul>
+          <p class="empty-state" id="dueEmpty">No upcoming deadlines.</p>
+        </section>
+      </aside>
+
+      <section class="daily-panel" data-section="daily">
+        <header class="daily-header">
+          <div>
+            <h2>DAILY TASKS</h2>
+            <span class="visually-hidden" id="headerDate"></span>
+          </div>
+          <button class="panel-add" type="button" data-add="daily" aria-label="Add daily task">+</button>
+        </header>
+
+        <div class="task-toolbar" aria-label="Task filters">
+          <div class="filter-group" role="group" aria-label="Filter tasks">
+            <button class="filter-button active" type="button" data-filter="all">All</button>
+            <button class="filter-button" type="button" data-filter="pending">Pending</button>
+            <button class="filter-button" type="button" data-filter="completed">Completed</button>
+          </div>
+          <span class="task-count" id="taskCount"></span>
+        </div>
+
+        <ul class="task-list daily-list" id="dailyList"></ul>
+        <div class="empty-daily" id="dailyEmpty">
+          <span class="empty-check" aria-hidden="true">✓</span>
+          <h3>Your desk is clear</h3>
+          <p>Add a task to get the day moving.</p>
+        </div>
+        <button class="bottom-add" type="button" data-add="daily">+&nbsp; Add Daily Task</button>
+      </section>
+    </section>
+  </main>
+
+  <dialog class="task-dialog" id="taskDialog">
+    <form method="dialog" id="taskForm">
+      <div class="dialog-title-row">
+        <div>
+          <p class="eyebrow" id="dialogEyebrow">NEW ITEM</p>
+          <h2 id="dialogTitle">Add task</h2>
+        </div>
+        <button class="icon-button close-button" type="button" id="closeDialog" aria-label="Close">×</button>
+      </div>
+
+      <input type="hidden" id="taskId">
+      <label class="field-label" for="taskName">Task name</label>
+      <input class="text-input" id="taskName" name="taskName" maxlength="100" required autocomplete="off" placeholder="What needs to be done?">
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="taskSection">Section</label>
+          <select class="text-input" id="taskSection" name="taskSection">
+            <option value="daily">Daily Tasks</option>
+            <option value="emi">EMI Today</option>
+            <option value="tomorrow">Tomorrow</option>
+            <option value="due">Due Dates</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="taskDate">Scheduled date</label>
+          <input class="text-input" id="taskDate" name="taskDate" type="date">
+        </div>
+      </div>
+
+      <label class="attachment-field" for="taskAttachment">
+        <span class="attachment-icon" aria-hidden="true">↥</span>
+        <span><strong>Attach Excel file</strong><small id="attachmentHelp">.xls or .xlsx · optional</small></span>
+        <input id="taskAttachment" name="taskAttachment" type="file" accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      </label>
+
+      <div class="dialog-actions">
+        <button class="secondary-button" type="button" id="cancelDialog">Cancel</button>
+        <button class="primary-button" type="submit">Save task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
+
